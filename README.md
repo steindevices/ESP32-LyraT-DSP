@@ -1,29 +1,31 @@
 # ESP32_LyraT_DSP
-An audio subwoofer DSP built on the Espressif ESP32 LyraT.
+The backstory:
 
-(Note: This is the first time I have posted anything to GitHub and I am sure I am making a huge number of rookie mistakes. Please bear with me.)
+In building my new home theater, I planned to dabble a bit into the DIY DSP world to try to tame some room anomalies without spending a bunch of cash. As I have experience in C/C++ and the Arduino world, I figured I would try building my own inexpensive processor. I settled on the Espressif ESP32-Lyrat developer board as a platform as it is open source, cheap ($20), contains a fast processor (ESP32), and includes onboard WIFI as well as a 24-bit DAC/ADC (ES8388).
 
-As an avid home theater builder, I was looking for a way to reduce the differential bass output that is typically experienced by listeners in different room locations. This is a common problem wherein the characteristics of the room cause different modes at different locations. In my case, listeners at the back of the room sit higher (on a stage) than those in the front creating significant relative boominess in the back. After reading several papers on flattening overall room response by employing a program such as REW to analyze room response, and then applying the derived filters to multiple subwoofers, I thought I would try creating my own subwoofer DSP for fun. 
+After some weeks of development, my DSP is now up and running and has been incorporated into my home theater.
 
-I recognize that this can also be accomplished by retail products such as the MiniDSP, but with the release of Espressif's ESP32 LyraT which includes:
+The DSP:
 
-- A fast ESP32 Wrover processor
-- On-board WiFi capabilities
-- 24-bit ADC/DAC
-- Stereo IN/OUT
-- Dual on-board microphones
-- DSP library from Espressif
+As per my personal requirements, my DSP project supports the following:
 
-and costs less than $30, it seemed like everything was there to create my own two channel DSP for cheap. 
+-2 channel INPUT/OUTPUT;
+-Channel mixing;
+-Pre-defined filter types including low-pass, high-pass, band-pass, shelf, notch, APF, and peak eq;
+-Support for user-defined biquad filters;
+-Independent channel delay;
+-Independent channel gain/attenuation;
+-Transfer function plotting;
+-Support for varying sample rates (e.g. 44 Khz, 48Khz);
+-3D printed case developed in Autodesk Fusion 360
 
-The goal of the project is to:
+As this was for my personal use, it is a bit rough around the edges and filter settings, delays, etc. are controlled via updates to the source code/recompiles. That said, it works and could be the foundation for a more comprehensive cheap DIY DSP effort.
 
-1. Support at least two subwoofers
-2. Allow for cascading biquads (up to 10) for each channel at a sample rate of 44.1K without audible issues
-3. Provide a means to also control gain and delay for each channel
-4. Over-the-air (OTA) DSP update capability
-5. A means to interact with the device remotely (since it would be buried in a cabinet)
-6. Arduino support (just makes life easier overall)
+The materials required:
+-Experience with the Arduino develpment environment
+-1 ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20)
+-1 (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
+-1 (Optional) 3D printer
 
 The code provided here consists of the following:
 
@@ -55,7 +57,3 @@ When accessing the DSP from Telnet, the following commands are currently availab
 - r - Run the DSP (un-mute)
 
 The list of commands is not supposed to be comprehensive, but more a starting point. A quick review of the code will show how the commands can be expanded/changed.
-
-I have placed this code in the public domain to see if anyone else might have some interest in using the LyraT as a formalized DSP including expanding its functionality. One obvious extension would be to use the onboard microphones to perform the room analysis as well, thereby eliminating the need for a program such as REW completely. That would be cool!
-
-Aaron
