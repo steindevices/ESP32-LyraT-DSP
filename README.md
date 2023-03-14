@@ -42,7 +42,7 @@ ALWAYS lower your amplifier volume initially when testing new filter uploads. Ke
 You'll need:
 
 - Experience with the Arduino develpment environment
-- An ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20) available (for example) [here].(https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704)
+- An ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20) available (for example) [here](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704).
 - (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
 - (Optional) 3D printer
 
