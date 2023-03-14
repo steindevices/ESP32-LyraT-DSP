@@ -130,7 +130,16 @@ User specified biquad filters are also supported in the **dsp_config.h** file in
 
 ## How do I configure my outputs settings?
 
-In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. For example, in a dual subwoofer environment you might mix the two input channels and add filters to boost specific frequencies. If you are bullding a sub-satellite arrangement, you would typically specify a crossover with matching low and high pass filters for the sub and satellite speakers. To adjust for room behaviour, you might import filters from an external program like REW where the appropriate freqeuencies and Q's have been calculated. To add effects speakers to a room, you might specify a delay with a high pass filter for two surround speakers. Example configuration files for each of these situations is provided in the [Examples](Examples) directory.
+In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. This allows for quite a bit of control.
+
+For example:
+
+- In a dual subwoofer environment, you can mix the two input channels and add filters to boost specific frequencies for each.
+- If you are building a a two-way speaker and intending to use the DSP as an active crossover, you can feed one input into both channels and specify matching low and high pass filters.
+- To fix lows and highs in a room, you can import the filters from an external room analyzing program like REW, and then specify these filters in the DSP to compensate for each speaker channel.
+- To add ambient effects speakers to a room, you can specify 1 to 250 ms of delay and add a high pass filter for a pair of surround speakers. 
+ 
+Example configuration files for each of these situations is provided in the [Examples](Examples) directory.
 
 ## What is the maximum number of filters I can define?
 
