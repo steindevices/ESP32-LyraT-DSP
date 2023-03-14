@@ -29,7 +29,7 @@ Filter settings, delays, etc. are controlled via updates to the source code, rec
 
 ## Could I damage my speakers with this DSP?
 
-It's possible but unlikely if you take care. You should ALWAYS lower your amplifier level whenever you upload new firmware to the DSP. This is for two reasons; 
+**It's possible but unlikely if you take care.** You should ALWAYS lower your amplifier level whenever you upload new firmware to the DSP. This is for two reasons; 
 
 1. The act of uploading into the DSP will generate a short burst of white noise at the tail end of the upload. The volume of this white noise cannot be controlled and can be quite loud. 
 
@@ -42,13 +42,13 @@ ALWAYS lower your amplifier volume initially when testing new filter uploads. Ke
 You'll need:
 
 - Experience with the Arduino develpment environment
-- An ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20) available (for example) [here.](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704)
+- An ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20) available (for example) [here].(https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704)
 - (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
 - (Optional) 3D printer
 
 Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
-Note that this application currently only works with [this] (https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704) ESP32-Lyrat development board shown below:
+Note that this application currently only works with [this](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704) ESP32-Lyrat development board shown below:
 
 ***
 
