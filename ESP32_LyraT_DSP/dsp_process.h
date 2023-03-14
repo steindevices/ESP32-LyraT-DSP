@@ -1,5 +1,5 @@
 #define DISPLAY_ON
-#define DAC_24_BIT
+//#define DAC_24_BIT
 #define WIFI_ON
 
 #include <string.h>
@@ -80,13 +80,17 @@ typedef struct filter_def_t {
   float         frequency;                        // Centre frequency of filter
   double        Q;                                // Q value
   float         gain;                             // Gain value in dB
+#if DOUBLE_PRECISION
   int           precision;                        // Implement as float or double
+#endif
 } filter_def_t;
 
 typedef struct biquad_def_t {
   int           channel;                          // Associated channel
   double        coeffs[5];                        // Biquad coefficients
+#ifdef DOUBLE_PRECISION  
   int           precision;                        // Implement as float or double
+#endif
 } biquad_def_t;
 
 typedef struct dsp_filter_t {

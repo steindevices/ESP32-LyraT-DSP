@@ -1,7 +1,4 @@
 R"(
-)"
-/*
- * 
 Notes:
 Generic
 Number Enabled Control Type Frequency(Hz) Gain(dB) Q Bandwidth(Hz) TargetT60(ms) FilterT60(ms) 
@@ -25,4 +22,4 @@ Number Enabled Control Type Frequency(Hz) Gain(dB) Q Bandwidth(Hz) TargetT60(ms)
 18 True Auto PK 4377 -1.90 4.642 942.9 
 19 True Auto PK 6179 -6.10 4.919 1256 
 20 True Auto PK 11075 0.00 2.419 4578 
- * */
+)"

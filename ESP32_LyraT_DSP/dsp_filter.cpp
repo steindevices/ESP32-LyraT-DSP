@@ -33,8 +33,10 @@ void dsp_filter_info( dsp_channel_t* channels ) {
     SERIAL.printf( "I-DSP:   Scaling factor = %f\r\n", dsp_data->scaling_factor );
     SERIAL.printf( "I-DSP:   User delay = %d millis\r\n", channel->delay_millis );
     SERIAL.printf( "I-DSP:   Delay samples = %d\r\n", dsp_data->delay_samples );
+#if DEBUG_ON
     SERIAL.printf( "I-DSP:   Input level max = %d\r\n", dsp_data->in_max_level );
     SERIAL.printf( "I-DSP:   Output level max = %d\r\n", dsp_data->out_max_level );    
+#endif
     SERIAL.printf( "I-DSP:   Input clipping count = %d\r\n", dsp_data->in_clip_count );
     SERIAL.printf( "I-DSP:   Output clipping count = %d\r\n", dsp_data->out_clip_count );
     SERIAL.printf( "I-DSP:   Filter count = %d\r\n", dsp_data->num_filters );
@@ -149,8 +151,11 @@ static esp_err_t dsp_load_biquads( dsp_channel_t* channel, int channel_id, biqua
         dsp_data->filter[num_filters].coeffs_f[i] = biquad_defs[filter_id].coeffs[i];          
       }
 
+#if DOUBLE_PRECISION
       dsp_data->filter[num_filters].precision = biquad_defs[filter_id].precision;
-      
+#else
+      dsp_data->filter[num_filters].precision = PRC_FLT;
+#endif
       dsp_data->filter[num_filters].w[0] = 0.0;
       dsp_data->filter[num_filters].w[1] = 0.0;
     
@@ -196,9 +201,11 @@ static esp_err_t dsp_load_filters( dsp_channel_t* channel, int channel_id, filte
       for( int i=0; i<5; ++i ) {
         dsp_data->filter[num_filters].coeffs_f[i] = dsp_data->filter[num_filters].coeffs_d[i];          
       }
-
+#ifdef DOUBLE_PRECISION
       dsp_data->filter[num_filters].precision = filter_defs[filter_id].precision;
-      
+#else
+      dsp_data->filter[num_filters].precision = PRC_FLT;
+#endif      
       dsp_data->filter[num_filters].w[0] = 0.0;
       dsp_data->filter[num_filters].w[1] = 0.0;
     

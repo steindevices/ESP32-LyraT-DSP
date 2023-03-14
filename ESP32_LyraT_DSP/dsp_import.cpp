@@ -56,7 +56,9 @@ static biquad_def_t* dsp_import_REW( int* import_filter_count ) {
       // Define the filter
       filter.filter_type = DSP_FILTER_PEAK_EQ;      
       filter.channel = DSP_ALL_CHANNELS;
-      filter.precision = PRC_FLT;      
+#ifdef DOUBLE_PRECISION
+      filter.precision = PRC_FLT;
+#endif
   
       // Frequency
       token = strtok( NULL, delimiters );
@@ -104,10 +106,7 @@ static biquad_def_t* dsp_import_REW( int* import_filter_count ) {
       }      
 
       // Calculate the biquads for this filter
-      dsp_get_biquad( &filter, &biquad_defs[num_filters].coeffs[0] );
-      
-      biquad_defs[num_filters].precision = PRC_FLT;
-      biquad_defs[num_filters].channel = DSP_ALL_CHANNELS;          
+      dsp_get_biquad( &filter, &biquad_defs[num_filters].coeffs[0] );       
 
       // Skip next value
       token = strtok( NULL, delimiters );              
@@ -174,7 +173,9 @@ static biquad_def_t* dsp_import_HouseCurve( int* import_filter_count ) {
       biquad_defs[num_filters].coeffs[i] = coeff; 
     }
 
+#ifdef DOUBLE_PRECISION
     biquad_defs[num_filters].precision = PRC_FLT;
+#endif
     biquad_defs[num_filters].channel = DSP_ALL_CHANNELS;
     
     token = strtok( NULL, delimiters ); 

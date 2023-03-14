@@ -10,7 +10,7 @@ dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
   },
   {
     "Effects Right",
-    {0,1},  
+    {0,1},
     0,
     100
   }
@@ -19,9 +19,9 @@ dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
 // Frequency specified filters
 filter_def_t FREQ_Filters[] = {  // Channel, Filter type, Center frequency, Q value, Gain
   {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
-  {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },      
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },  
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 }        
+  {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
  };
 
 // BiQuad specified filters
