@@ -48,9 +48,7 @@ You'll need:
 
 Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
-Note that this application currently only works with [this](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704) ESP32-Lyrat development board shown below:
-
-***
+Note that this application currently only works with development board shown below: ![Image of ESP32-T LyraT Board](/Docs/Images/ESP32-LyraT (WROVER-E)_1.png)
 
 There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other boards are more expensive and have fewer useful features for a pure audio application.
 
