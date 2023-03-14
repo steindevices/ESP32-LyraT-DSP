@@ -48,7 +48,7 @@ You'll need:
 
 Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
-Note that this application currently only works with development board shown below: ![Image of ESP32-T LyraT Board](/ESP32-LyraT-DSP/Docs/Images/ESP32-LyraT (WROVER-E)_1.png)
+Note that this application currently only works with development board shown below: ![Image of ESP32-T LyraT Board](/Docs/Images/ESP32-LyraT%20(WROVER-E)_1.png)
 
 There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other boards are more expensive and have fewer useful features for a pure audio application.
 
@@ -64,13 +64,15 @@ The specific ESP32 for the ESP32-Lyrat is the ESP32 Wrover. This is the one you 
 
 Beyond that, working with this board in Arduino is very similar to the ESP8266 with ONE important exception; when uploading the firmware from the serial port, you MUST press the RESET and BOOT buttons in a certain sequence. THIS IS VERY IMPORTANT. 
 
+Here is the board layout:
+
+![Image of ESP32-LyraT board layout](/Docs/Images/esp32-lyrat-v4.2-layout.jpg)
+
 As you initiate the upload you must:
 
-*** (Image of board)
-
-1. PRESS and HOLD the Reset button.
+1. PRESS and HOLD the RST button.
 2. PRESS and HOLD the Boot button.
-3. RELEASE the Reset button
+3. RELEASE the RST button
 4. RELEASE tbe Boot button
 
 Fortunately, once the firmware for the DSP has been loaded the first time, you will be able to upload over WiFi through the Arduino OTA.
@@ -79,7 +81,7 @@ Fortunately, once the firmware for the DSP has been loaded the first time, you w
 
 You need a few things:
 
-### Arduino IDE
+### Arduino IDE (1.xx)
 
 You will find it much easier to work with the ESP32 using the older Arduino 1.xx IDEs. There are some annoying bugs in the Arduino 2.xx IDE that make working with the EspressIf boards a bit of a pain. Until these get worked out, it's just easier to stick with the 1.xx IDE. If you don't aleady have it installed, here is a link to the most recent version ***. 
 
@@ -90,21 +92,20 @@ You will need to install the following libraries through the Arduino library man
 - ArduinoOTA	- To support over-the-air updates to the device
 - TelnetSpy	- To support user commands to the DSP from a Telnet connection
 - AdaFruitGFX 	- (if adding a Display)
-- ***
 
 Current versions of these libraries should be fine.
 
 ## Where do I get the code from?
 
-The code is located in the GitHub repository [here]. All of the source files are contained in the one ESP_LyraT_DSP directory. Like any other Arduino project, transfer these files to a new directory named ESP32_Lyrat_DSP in your Arduino application directory and you are good to go.
+The code is located in the GitHub repository [here](ESP32_LyraT_DSP). All of the source files are contained in the one ESP_LyraT_DSP directory. Like any other Arduino project, transfer these files to a new directory named ESP32_Lyrat_DSP in your Arduino application directory and you are good to go.
 
 ## How do I configure the DSP for my WiFi?
 
-Just update the file named credentials.h with your WiFi SSID and password. The DSP will automatically connect to your network.
+Just update the file named **credentials.h** with your WiFi SSID and password. The DSP will automatically connect to your network.
 
 ## How do I add my own designed filters?
 
-You add your filters by updating the dsp_config.h file. Example configurations can be found in the [Examples] *** directory for different applications. You can specify filters either in frequency form or as biquads. Both sets are compiled into the program and uploaded with the firmware. Ccombined, the maximum filters you can have is 20 per channel. The types of frequency filters that can be defined are:
+You add your filters by updating the **dsp_config.h** file. Example configurations can be found in the [Examples](Examples) directories for different applications. You can specify filters either in frequency form or as biquads. Both sets are compiled into the program and uploaded with the firmware. Combined, the maximum filters you can have is 20 per channel. The types of frequency filters that can be defined are:
 
 - DSP_FILTER_LOW_PASS
 - DSP_FILTER_HIGH_PASS
@@ -115,11 +116,11 @@ You add your filters by updating the dsp_config.h file. Example configurations c
 - DSP_FILTER_LOW_SHELF
 - DSP_FILTER_HIGH_SHELF
 
-User specified biquad filters are also supported in the dsp_config.h file in a similar fashion. Sequencing of the biquad filter coefficients is b0, b1, b2, a1, a2. Of course, it is up to the user to calculate the appropriate biquads for the filters they are implementing. [Here] *** is a link to a spreadsheet that will assist you in defining biquads if you decide to go this route.
+User specified biquad filters are also supported in the **dsp_config.h** file in a similar fashion. Sequencing of the biquad filter coefficients is b0, b1, b2, a1, a2. Of course, it is up to the user to calculate the appropriate biquads for the filters they are implementing. [Here](BiQuad%20Calculator) is a link to a spreadsheet that will assist you in defining biquads if you decide to go this route.
 
 ## How do I configure my outputs settings?
 
-In the dsp_config.h file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. For example, in a dual subwoofer environment you might mix the two input channels and add filters to boost specific frequencies. If you are bullding a sub-satellite arrangement, you would typically specify for onbe channel a crossover with matching low and high pass filters for the sub and satellite speaker. To adjust for room behaviour, you might import filters from an external program like REW where the appropriate freqeuencies and Q's have been calculated. To add simple effects speakers to a room, you might specify a delay with a high pass filter. Configuration files for each of these situations is provided in the [Examples] *** directory.
+In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. For example, in a dual subwoofer environment you might mix the two input channels and add filters to boost specific frequencies. If you are bullding a sub-satellite arrangement, you would typically specify for onbe channel a crossover with matching low and high pass filters for the sub and satellite speaker. To adjust for room behaviour, you might import filters from an external program like REW where the appropriate freqeuencies and Q's have been calculated. To add simple effects speakers to a room, you might specify a delay with a high pass filter. Configuration files for each of these situations is provided in the [Examples](Examples) directory.
 
 
 ## What is the maximum number of filters I can define?
@@ -128,7 +129,7 @@ You can define up to 20 filters per output channel. This includes your own filte
 
 ## How do I import filters from REW?
 
-If you are familiar with REW, you simply export the EQ filters from the application and then insert the contents into the file called dsp_import.h. Note that you must use the filter export format called XXX from REW, and that the contents must be pasted exactly as exported into the right location in the dsp_import.h file. 
+If you are familiar with REW, you simply export the EQ filters from the application and then insert the contents into the file called **dsp_import.h**. Note that you must use the filter export format called XXX from REW, and that the contents must be pasted exactly as exported into the right location in the **dsp_import.h** file. 
 
 If you are unfamilar with how to use REW to generate EQ filters, [here] *** is a link that shows how its done.
 
@@ -156,7 +157,7 @@ If you are interested in adding a display, let me know via GitHub e-mail and I w
 
 ## I hear some background noise. What can I do about it?
 
-Make sure you are using a good quality 5V power supply. Try different ones. If you can't seem to completely eliminate the noise, what you can do is add a bit of low level random noise in the DSP (called dither) to mask it. This is done by setting the variable DSP_DITHER to 1 in the file dsp_process.h.
+Make sure you are using a good quality 5V power supply. Try different ones. If you can't seem to completely eliminate the noise, what you can do is add a bit of low level random noise in the DSP (called dither) to mask it. This is done by setting the variable DSP_DITHER to 1 in the file **dsp_process.h**.
 
 ## What about a case? Is there one available?
 
@@ -168,7 +169,7 @@ Not at the moment though I intend to build that capability into a future version
 
 ## How do I know if the DSP is clipping?
 
-It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the dsp_config.h file. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
+It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the **dsp_config.h** file. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
 
 Note that the green LED will light when clipping occurs at either the input or output so you will need do determine where the clipping is occurring.
 
