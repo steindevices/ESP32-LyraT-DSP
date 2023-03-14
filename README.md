@@ -47,9 +47,9 @@ You'll need:
 - (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
 - (Optional) 3D printer
 
-**IMPORTANT: This application currently only works with development board shown above.**
+**IMPORTANT: This application currently only works with the development board shown above.**
 
-There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other boards are more expensive and have fewer useful features for a pure audio application.
+There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other LyraT boards are more expensive and have fewer useful features for a pure audio application.
 
 Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
@@ -65,18 +65,20 @@ It's a lot more powerful, with 4.5 MB of memory and 2 CPUs running at up to 800 
 
 The specific ESP32 for the ESP32-Lyrat is the ESP32 Wrover. This is the one you need to pick from the board list once the ESP32 boards have been installed. 
 
-Beyond that, working with this board in Arduino is very similar to the ESP8266 with ONE important exception; when uploading the firmware from the serial port, you MUST press the RESET and BOOT buttons in a certain sequence. THIS IS VERY IMPORTANT. 
+Beyond that, working with this board in Arduino is very similar to the ESP8266 with ONE important exception; when uploading the firmware from the serial port, you MUST press the RST and BOOT buttons in a certain sequence. THIS IS VERY IMPORTANT. 
 
 Here is the board layout:
 
 ![Image of ESP32-LyraT board layout](/Docs/Images/esp32-lyrat-v4.2-layout.jpg)
 
-As you initiate the serial upload you must in the correct order:
+As you initiate the serial upload you must (in the correct order):
 
 1. PRESS and HOLD the RST button.
 2. PRESS and HOLD the Boot button.
-3. RELEASE the RST button
-4. RELEASE tbe Boot button
+3. RELEASE the RST button.
+4. RELEASE tbe Boot button.
+5. Wait for the Arduino IDE to complete the upload. Completion is when a newline prints below the '...' line.
+6. PRESS the RST button.
 
 Fortunately, once the firmware for the DSP has been loaded the first time, you will be able to upload over WiFi through the Arduino OTA.
 
@@ -103,11 +105,11 @@ Current versions of these libraries should be fine.
 
 ## Where do I get the code from?
 
-The code is located in the GitHub repository [here](ESP32_LyraT_DSP). All of the source files are contained in the one ESP_LyraT_DSP directory. Like any other Arduino project, transfer these files to a new directory named ESP32_Lyrat_DSP in your Arduino application directory and you are good to go.
+The code is located in the GitHub repository [here](ESP32_LyraT_DSP). All of the source files are contained in the ESP_LyraT_DSP directory. Like any other Arduino project, transfer these files to a new directory named ESP32_Lyrat_DSP in your Arduino application directory and you are good to go.
 
 ## How do I configure the DSP for my WiFi?
 
-Just update the file named **credentials.h** with your WiFi SSID and password. The DSP will automatically connect to your network.
+Just update the file named **credentials.h** with your WiFi SSID and password. The DSP will automatically connect to your network when started. It will also automatically reconnect if it should lose the connection.
 
 ## How do I add my own designed filters?
 
@@ -144,8 +146,8 @@ If you are unfamilar with how to use REW to generate EQ filters, you will find t
 
 When you connect the board directly via the serial port, you can issue commands that provide information as to the board status including filter information as well as errors. When not directly connected to the serial port, you can also use Putty or any other Telnet application over WiFi to receive information from the DSP as it is running. Simply connect the telnet session to the DSP's IP address and use one of the commands below.
 
-- i - Display DSP config information for all channels. Also displayed at start-up.
-- p - Print text-based transfer curve (frequency response) curve for each channel.
+- i - Display DSP config information for all channels. Also displayed at start-up
+- p - Print text-based transfer curve (frequency response) curve for each channel
 - d - Disable DSP processing (pass-through mode)
 - e - Enable DSP processing (apply filters mode - default)
 - s - Stop the DSP (mute)
@@ -174,17 +176,17 @@ You will need four 3mm screws to secure the board, and four 2mm screws for the l
 
 ## I'd like to be able to upload new filters without needing to reprogram the DSP. Is this possible?
 
-Not at the moment though I intend to build that capability into a future version. Stay tuned.
+Not at the moment though I will likely add that capability in a future version. Stay tuned.
 
 ## How do I know if the DSP is clipping?
 
-It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the **dsp_config.h** file. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
+It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the filters. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
 
 Note that the green LED will light when clipping occurs at either the input or output.
 
 ## My board is not responding to Telnet and I can't program it over WiFi. What happened and what can I do?
 
-It's possible the ESP32 cannot connect to your WiFi due to a problem with WiFi, or if there is a problem with the firmware code. Sometimes it's just a matter of unplugging and plugging the board and it will reconnect. If you've made changes to the code or have made a mistake when configuring, the board may be in a reboot cycle. When this happens you will need to fix your changes and re-upload to the board via the serial port
+It's possible the ESP32 cannot connect to your WiFi due to a problem with WiFi or it could be a problem with the firmware code. Sometimes it's just a matter of unplugging and plugging the board and it will reconnect. If you've made changes to the code or made a mistake when configuring, the board may be in a reboot cycle. When this happens you will need to figure out and fix your changes and then re-upload to the board via the serial port.
 
 ## I'd like to better understand and create my own biquads. How can I do that?
 
@@ -192,4 +194,4 @@ There is a lot of information on Z-Transforms, IIR filters, biquads, etc. on the
 
 ## How do I change the range of the DSP plot? (e.g. from 20 Hz to 120 Hz)
 
-You can change the plot layout by making changes to the **dsp_plot.cpp** file and recompiling. Setting **FREQ_RANGE_LOW** to 20.0 and **FREQ_RANGE_HEIGHT** to 120.0 in the code will change the plot as requested here.
+You can change the plot layout by making changes to the **dsp_plot.cpp** file and recompiling. Setting **FREQ_RANGE_LOW** to 20.0 and **FREQ_RANGE_HIGH** to 120.0 in the code will change the plot as requested here.
