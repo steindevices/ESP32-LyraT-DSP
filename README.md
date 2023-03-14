@@ -92,9 +92,12 @@ You will find it much easier to work with the ESP32 using the older Arduino 1.8.
 
 You will need to install the following libraries through the Arduino library manager:
 
-- ArduinoOTA    - To support over-the-air updates to the device
-- TelnetSpy	    - To support user commands to the DSP from a Telnet connection
-- AdaFruitGFX 	- (if adding a Display)
+- TelnetSpy - To support user commands to the DSP from a Telnet connection. Library can be found [here](https://github.com/yasheena/telnetspy).
+
+Optional (only if display is added)
+- AdaFruit_GFX - Library can be found [here](https://github.com/adafruit/Adafruit-GFX-Library).
+- AdaFruit_BusIO - Library can be found [here](https://github.com/adafruit/Adafruit_BusIO).
+- AdaFruit_SSD1306 - Library can be found [here](https://github.com/adafruit/Adafruit_SSD1306).
 
 Current versions of these libraries should be fine.
 
