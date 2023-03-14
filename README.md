@@ -128,7 +128,7 @@ The types of frequency filters that can be defined are:
 
 User specified biquad filters are also supported in the **dsp_config.h** file in a similar fashion. Sequencing of the biquad filter coefficients is b0, b1, b2, a1, a2. Of course, it is up to the user to calculate the appropriate biquads for the filters they are implementing. [Here](BiQuad%20Calculator) is a link to a spreadsheet that will assist you in defining biquads if you decide to go this route.
 
-## How do I configure my outputs settings?
+## How do I configure inputs/outputs, delay and overall channel gain?
 
 In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. This allows for quite a bit of control.
 
