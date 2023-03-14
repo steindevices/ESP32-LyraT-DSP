@@ -1,4 +1,4 @@
-// Example: Dual subwoofers mixing left and right channels with -24 dB per octave crossover at 120 Hz and peak filters at 35 and 60 Hz
+// Example: Left and Right effects speakers with 100 millisecond delay and high pass filter set at 120 Hz
 
 // Channel configuration
 dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {

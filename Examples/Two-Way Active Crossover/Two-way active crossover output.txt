@@ -3,7 +3,7 @@ I-DSP:   Sampling bits = 16
 I-DSP:   Sampling delay = 4.353742 ms
 I-DSP:   Dither = OFF
 
-I-DSP: Channel A: Channel A
+I-DSP: Channel A: Woofer
 I-DSP:   Input 0 = 0
 I-DSP:   Input 1 = 1
 I-DSP:   Gain = 0.000000 dB
@@ -18,7 +18,7 @@ I-DSP:     Low Pass: Frequency=  120.0  Q=7.00000000000000e-01  Gain= 0.0
 I-DSP:   Filter 2 coeffs = 7.21943416266700e-05 1.44388683253340e-04 7.219434162                                                                                                                                                             66700e-05 -1.97558262910536e+00 9.75871406471866e-01 (FLT)
 I-DSP:     Low Pass: Frequency=  120.0  Q=7.00000000000000e-01  Gain= 0.0
 
-I-DSP: Channel B: Channel B
+I-DSP: Channel B: Tweeter
 I-DSP:   Input 0 = 1
 I-DSP:   Input 1 = 0
 I-DSP:   Gain = 0.000000 dB

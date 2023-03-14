@@ -1,15 +1,15 @@
-// Example: Left channel speaker with crossover at 120 Hz with -24 dB slope
+// Example: Two-way active speaker with -24 dB per ocatve crossover set at 120 Hz
 
 // Channel configuration
 dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
   {
-    "Subwoofer",        // Channel name
+    "Woofer",        // Channel name
     {1,0},              // Input channel(s) - Left/Right
     0,                  // Gain in dB
     0,                  // Delay in milliseconds
   },
   {
-    "Bookshelf",
+    "Tweeter",
     {1,0},
     0,
     0
