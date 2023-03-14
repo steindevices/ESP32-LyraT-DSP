@@ -18,7 +18,7 @@ static void setupTelnetSpy() {
   char msg[] = "Successfully connected to ESP32 LyraT DSP Processor.\r\n";
 
   // Welcome message
-  SerialAndTelnet.setWelcomeMsg( msg ); 
+  SerialAndTelnet.setWelcomeMsg( msg );   
 
   // Set the buffer size to 2000 characters
   SerialAndTelnet.setBufferSize( 2000 );

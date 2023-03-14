@@ -1,4 +1,4 @@
-#define DISPLAY_ON
+//#define DISPLAY_ON
 //#define DAC_24_BIT
 #define WIFI_ON
 
