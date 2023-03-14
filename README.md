@@ -47,7 +47,7 @@ You'll need:
 - (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
 - (Optional) 3D printer
 
-**IMPORTANT:** This application currently only works with development board shown above.
+**IMPORTANT: This application currently only works with development board shown above.**
 
 There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other boards are more expensive and have fewer useful features for a pure audio application.
 
@@ -55,7 +55,9 @@ Of course, keep in mind that a DSP does not have the ability to power speakers d
 
 ## Do I need anything else for this project?
 
-You'll need two micro-USB power supply cables, as well as two stereo 3.5 mm audio cables. The former are used to power the DSP - a 1A 5V supply should be fine - and to interface with the ESP32 chip for uploads. Once the firmware has been uploaded the first time, you will be able to program the board over WiFi through the Arduino OTA interface, and will only need one cable for power after that. The two stereo cables are used to connect the DSP to an input source (e.g. receiver) and an output amplifier. If you want, you can also add an optional display to the DSP to show what it is doing. I have coded for a small 0.91" OLED that can readily be purchased on Amazon and will provide additional details on how to add it on request.
+You'll need two micro-USB power supply cables, as well as two stereo 3.5 mm audio cables. The former are used to power the DSP - a 1A 5V supply should be fine - and to interface with the ESP32 chip for uploads. Once the firmware has been uploaded the first time, you will be able to program the board over WiFi through the Arduino OTA interface, and will only need one cable for power after that. The two stereo cables are used to connect the board AUX input to a stereo source (e.g. receiver) and the board's HEADPHONE stereo output to an amplifier. 
+
+Optionally, you can also add a display to the DSP to show what it is doing. I have coded for a small 0.91" OLED that can readily be purchased on Amazon and will provide additional details on how to add it on request.
 
 ## I've built projects with the ESP8266 before. How does the ESP32 differ?
 
@@ -133,7 +135,7 @@ You can define up to 20 filters per output channel. This includes your own filte
 
 If you are familiar with REW, you simply export the EQ filters from the application and then insert the contents into the file called **dsp_import.h**. Note that you must use the filter export format called **miniDSP_2x4_HD** from REW, and that the contents must be pasted exactly as exported into the correct location in the **dsp_import.h** file. 
 
-If you are unfamilar with how to use REW to generate EQ filters, you will find the step-by-step process [here](https://www.minidsp.com/applications/rew/rew-autoeq-step-by-step). This example is for the MiniDSP, but the general process is essentially the same. Once the EQ file is exported, you simply copy and paste it into the **dsp_import.h** file. Use the example [here](/Examples/Room%20Curve%20Correction/dsp_import.h) as a template. If you make a mistake, an error will be generated and shown when you connect to the DSP via Telnet or the Serial port, or on the OLED display if one is attached.
+If you are unfamilar with how to use REW to generate EQ filters, you will find the step-by-step process [here](https://www.minidsp.com/applications/rew/rew-autoeq-step-by-step). This example is for the MiniDSP, but the general process is essentially the same. Once the EQ file is exported, you simply copy and paste it into the **dsp_import.h** file. Use the example [here](/Examples/Room%20Curve%20Correction/dsp_import.h) as a template. If you make a mistake, an error will be generated and shown when you connect to the running DSP via Telnet or the Serial port, or on the OLED display if one is attached.
 
 ## How can I see what the DSP is doing?
 
@@ -161,7 +163,11 @@ Make sure you are using a good quality 5V power supply. Try different ones. If y
 
 ## What about a case for the DSP? Is there one available?
 
-If you have access to a 3D printer, you will find an STL file for a case [here](***). You will need 4 3mm screws to secure the board, and 4 2mm screws for the lid.
+If you have access to a 3D printer, you will find an STL file for a case [here](/Case). 
+
+![Case](Case/ESP32%20LyraT%20DSP%20Case%20(no%20display).jpg)
+
+You will need four 3mm screws to secure the board, and four 2mm screws for the lid.
 
 ## I'd like to be able to upload new filters without needing to reprogram the DSP. Is this possible?
 
