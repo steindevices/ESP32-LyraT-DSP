@@ -3,25 +3,30 @@
 // Channel configuration
 dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
   {
-    "Effects Left",     // Channel name
-    {1,0},              // Input channel(s) - Left/Right
+    "Subwoofer 1",      // Channel name
+    {1,1},              // Input channel(s) - Left/Right
     0,                  // Gain in dB
-    100,                // Delay in milliseconds
+    0,                  // Delay in milliseconds
   },
   {
-    "Effects Right",
-    {0,1},  
+    "Subwoofer 2",
+    {1,1},
     0,
-    100
+    0
   }
 };
 
 // Frequency specified filters
 filter_def_t FREQ_Filters[] = {  // Channel, Filter type, Center frequency, Q value, Gain
-  {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
-  {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },      
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },  
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 }        
+  {0, DSP_FILTER_LOW_PASS, 120, 0.7, 0.0 },
+  {0, DSP_FILTER_LOW_PASS, 120, 0.7, 0.0 },
+  {0, DSP_FILTER_PEAK_EQ, 35, 2.0, 4.0 },
+  {0, DSP_FILTER_PEAK_EQ, 60, 5.0, -6.0 },
+
+  {1, DSP_FILTER_LOW_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_LOW_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_PEAK_EQ, 35, 2.0, 4.0 },
+  {1, DSP_FILTER_PEAK_EQ, 60, 5.0, -6.0 },
  };
 
 // BiQuad specified filters

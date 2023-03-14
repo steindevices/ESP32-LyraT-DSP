@@ -1,3 +1,3 @@
 // Personal credentials file
-#define WIFI_SSID                     YOUR_SSID
-#define WIFI_PASSWORD                 YOUR_PASSWORD
+#define WIFI_SSID                     TEST
+#define WIFI_PASSWORD                 TEST
