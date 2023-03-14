@@ -34,7 +34,7 @@ Filter settings, delays, etc. are controlled via updates to the source code, rec
 
 1. The act of uploading into the DSP will generate a short burst of white noise at the tail end of the upload. The volume of this white noise cannot be controlled and can be quite loud. 
 
-2. IMPORTANT: If you are implementing your own biquads, the filters may become unstable. Unstable filters generate VERY LOUD RANDOM NOISE VERY QUICKLY that can easily damage speakers if the amplifier volume is set high.
+2. **IMPORTANT:** If you are implementing your own biquads, the filters may become unstable. Unstable filters generate VERY LOUD RANDOM NOISE VERY QUICKLY that can easily damage speakers if the amplifier volume is set high.
 
 ALWAYS lower your amplifier volume initially when testing new filter uploads. Keep in mind that this is an open development project and as such it is up to you to ensure that your equipment is kept safe.
 
@@ -43,15 +43,15 @@ ALWAYS lower your amplifier volume initially when testing new filter uploads. Ke
 You'll need:
 
 - Experience with the Arduino develpment environment
-- An ESP32-Lyrat development board (ESP32-LyraT Overview | Espressif Systems) (around $20) available (for example) [here](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704).
+- A $20 ESP32-Lyrat development board available (for example) [here](https://www.digikey.com/en/products/detail/espressif-systems/ESP32-LYRAT/9381704).
 - (Optional) 0.96" IIC OLED LCD Screen LED 128X64 (<$5)
 - (Optional) 3D printer
-
-Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
 **IMPORTANT:** This application currently only works with development board shown above.
 
 There are a number of other ESP32-Lyrat boards, but they are configured with different features that may or may not work properly with this code. My guess is that most of this code will work on the other boards, but some modifications would probably needed. Besides, most of the other boards are more expensive and have fewer useful features for a pure audio application.
+
+Of course, keep in mind that a DSP does not have the ability to power speakers directly. You will also need an amplifier as you would with any other DSP.
 
 ## Do I need anything else for this project?
 
@@ -82,9 +82,9 @@ Fortunately, once the firmware for the DSP has been loaded the first time, you w
 
 You need a few things:
 
-### 1. Arduino IDE (1.xx)
+### 1. Arduino IDE (1.8.x)
 
-You will find it much easier to work with the ESP32 using the older Arduino 1.xx IDEs. There are some annoying bugs in the Arduino 2.xx IDE that make working with the EspressIf boards a bit of a pain. Until these get worked out, it's just easier to stick with the 1.xx IDE. If you don't aleady have it installed, here is a link to the most recent version ***. 
+You will find it much easier to work with the ESP32 using the older Arduino 1.8.x IDEs. There are some annoying bugs in the Arduino 2.0.x IDE that make working with the EspressIf boards a bit of a pain. Until these get worked out, it's just easier to stick with the 1.8.x IDEs. If you don't aleady have one installed, [here](https://www.arduino.cc/en/software/OldSoftwareReleases) is a link to these versions.
 
 ### 2. Arduino libraries
 
@@ -106,7 +106,9 @@ Just update the file named **credentials.h** with your WiFi SSID and password. T
 
 ## How do I add my own designed filters?
 
-You add your filters by updating the **dsp_config.h** file. Example configurations can be found in the [Examples](Examples) directories for different applications. You can specify filters either in frequency form or as biquads. Both sets are compiled into the program and uploaded with the firmware. Combined, the maximum filters you can have is 20 per channel. The types of frequency filters that can be defined are:
+You add your filters by updating the **dsp_config.h** file. Example configurations can be found in the [Examples](Examples) directories for different applications. You can specify filters either in frequency form or as biquads. Both sets are compiled into the program and uploaded with the firmware. Combined, the maximum filters you can have is 20 per channel. 
+
+The types of frequency filters that can be defined are:
 
 - DSP_FILTER_LOW_PASS
 - DSP_FILTER_HIGH_PASS
@@ -121,7 +123,7 @@ User specified biquad filters are also supported in the **dsp_config.h** file in
 
 ## How do I configure my outputs settings?
 
-In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. For example, in a dual subwoofer environment you might mix the two input channels and add filters to boost specific frequencies. If you are bullding a sub-satellite arrangement, you would typically specify a crossover with matching low and high pass filters for the sub and satellite speaker. To adjust for room behaviour, you might import filters from an external program like REW where the appropriate freqeuencies and Q's have been calculated. To add simple effects speakers to a room, you might specify a delay with a high pass filter for two surround speakers. Configuration files for each of these situations is provided in the [Examples](Examples) directory.
+In the **dsp_config.h** file, you specify the name of each output channel, amount of delay, gain, and mixing of the inputs. For example, in a dual subwoofer environment you might mix the two input channels and add filters to boost specific frequencies. If you are bullding a sub-satellite arrangement, you would typically specify a crossover with matching low and high pass filters for the sub and satellite speakers. To adjust for room behaviour, you might import filters from an external program like REW where the appropriate freqeuencies and Q's have been calculated. To add effects speakers to a room, you might specify a delay with a high pass filter for two surround speakers. Example configuration files for each of these situations is provided in the [Examples](Examples) directory.
 
 ## What is the maximum number of filters I can define?
 
@@ -129,13 +131,13 @@ You can define up to 20 filters per output channel. This includes your own filte
 
 ## How do I import filters from REW?
 
-If you are familiar with REW, you simply export the EQ filters from the application and then insert the contents into the file called **dsp_import.h**. Note that you must use the filter export format called XXX from REW, and that the contents must be pasted exactly as exported into the right location in the **dsp_import.h** file. 
+If you are familiar with REW, you simply export the EQ filters from the application and then insert the contents into the file called **dsp_import.h**. Note that you must use the filter export format called **miniDSP_2x4_HD** from REW, and that the contents must be pasted exactly as exported into the correct location in the **dsp_import.h** file. 
 
-If you are unfamilar with how to use REW to generate EQ filters, [here](https://www.minidsp.com/applications/rew/rew-autoeq-step-by-step). This example is for a MiniDSP, but the process is essentially the same. Once the EQ file is exported, you simply copy and paste it into the **dsp_import.h** file. Use the example [here](/Examples/Room%20Curve%20Correction/dsp_import.h) as a template. If you make a mistake, an error will be generated and shown when you connect to the DSP via Telnet or the Serial port, or on the OLED display if one is attached.
+If you are unfamilar with how to use REW to generate EQ filters, you will find the step-by-step process [here](https://www.minidsp.com/applications/rew/rew-autoeq-step-by-step). This example is for the MiniDSP, but the general process is essentially the same. Once the EQ file is exported, you simply copy and paste it into the **dsp_import.h** file. Use the example [here](/Examples/Room%20Curve%20Correction/dsp_import.h) as a template. If you make a mistake, an error will be generated and shown when you connect to the DSP via Telnet or the Serial port, or on the OLED display if one is attached.
 
 ## How can I see what the DSP is doing?
 
-When you connect the board directly via the serial port, you can issue commands that provide information as to the board status including filter information as well as errors. When not directly connected to the serial port, you can also use Putty or any other Telnet application to receive information from the DSP as it is running over WiFi. Simply connect the telnet session to the DSP's IP address and use one of the commands below.
+When you connect the board directly via the serial port, you can issue commands that provide information as to the board status including filter information as well as errors. When not directly connected to the serial port, you can also use Putty or any other Telnet application over WiFi to receive information from the DSP as it is running. Simply connect the telnet session to the DSP's IP address and use one of the commands below.
 
 - i - Display DSP config information for all channels. Also displayed at start-up.
 - p - Print text-based transfer curve (frequency response) curve for each channel.
@@ -155,9 +157,9 @@ If you are interested in adding a display, let me know via GitHub e-mail and I w
 
 ## I hear some background noise. What can I do about it?
 
-Make sure you are using a good quality 5V power supply. Try different ones. If you can't seem to completely eliminate the noise, what you can do is add a bit of low level random noise in the DSP (called dither) to mask it. This is done by setting the variable DSP_DITHER to 1 in the file **dsp_process.h**.
+Make sure you are using a good quality 5V power supply. Try different ones. If you can't seem to completely eliminate the noise, what you can do is add a bit of low level random noise in the DSP (called dither) to mask it. This is done by setting the variable **DSP_DITHER** to 1 in the file **dsp_process.h**.
 
-## What about a case? Is there one available?
+## What about a case for the DSP? Is there one available?
 
 If you have access to a 3D printer, you will find an STL file for a case [here](***). You will need 4 3mm screws to secure the board, and 4 2mm screws for the lid.
 
@@ -173,7 +175,7 @@ Note that the green LED will light when clipping occurs at either the input or o
 
 ## My board is not responding to Telnet and I can't program it over WiFi. What happened and what can I do?
 
-It's possible the ESP32 cannot connect to your WiFi due to a problem with WiFi or if there is a problem with the firmware code. Sometimes it's just a matter of unplugging and plugging the board and it will reconnect. If you've made changes to the code or have made a mistake when configuring, the board may be in a reboot cycle. When this happens you will need to fix your changes and re-upload to the board via the serial port
+It's possible the ESP32 cannot connect to your WiFi due to a problem with WiFi, or if there is a problem with the firmware code. Sometimes it's just a matter of unplugging and plugging the board and it will reconnect. If you've made changes to the code or have made a mistake when configuring, the board may be in a reboot cycle. When this happens you will need to fix your changes and re-upload to the board via the serial port
 
 ## I'd like to better understand and create my own biquads. How can I do that?
 
