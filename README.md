@@ -75,8 +75,10 @@ As you initiate the serial upload you must in the correct order:
 
 1. PRESS and HOLD the RST button.
 2. PRESS and HOLD the Boot button.
-3. RELEASE the RST button
-4. RELEASE tbe Boot button
+3. RELEASE the RST button.
+4. RELEASE tbe Boot button.
+5. Wait for the Arduino IDE to complete the upload. Completion is when a newline prints below the '...' line.
+6. PRESS the RST button.
 
 Fortunately, once the firmware for the DSP has been loaded the first time, you will be able to upload over WiFi through the Arduino OTA.
 
