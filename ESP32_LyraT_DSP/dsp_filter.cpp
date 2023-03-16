@@ -145,7 +145,7 @@ static esp_err_t dsp_load_biquads( dsp_channel_t* channel, int channel_id, biqua
         return( ESP_FAIL );
       }
       
-      // Store biquads as floats and doubles (Note: reverse sign of a1 and a2 biquads)
+      // Store biquads as floats and doubles
       for( int i=0; i<5; ++i ) {
         dsp_data->filter[num_filters].coeffs_d[i] = biquad_defs[filter_id].coeffs[i];
         dsp_data->filter[num_filters].coeffs_f[i] = biquad_defs[filter_id].coeffs[i];          
