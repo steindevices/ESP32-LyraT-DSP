@@ -261,7 +261,7 @@ esp_err_t dsp_filter_init( dsp_channel_t* channels, biquad_def_t* biquad_defs, i
   }
 
   return( ESP_OK );
-};
+}
 
 
 //------------------------------------------------------------------------------------

@@ -105,8 +105,13 @@ static biquad_def_t* dsp_import_REW( int* import_filter_count ) {
         return( NULL );
       }      
 
-      // Calculate the biquads for this filter
-      dsp_get_biquad( &filter, &biquad_defs[num_filters].coeffs[0] );       
+      // Calculate the biquad for this filter
+      dsp_get_biquad( &filter, &biquad_defs[num_filters].coeffs[0] ); 
+      
+#ifdef DOUBLE_PRECISION
+      biquad_defs[num_filters].precision = PRC_FLT;
+#endif
+      biquad_defs[num_filters].channel = DSP_ALL_CHANNELS;            
 
       // Skip next value
       token = strtok( NULL, delimiters );              
@@ -172,7 +177,6 @@ static biquad_def_t* dsp_import_HouseCurve( int* import_filter_count ) {
       // Reverse sign of a1 and a2 biquads
       biquad_defs[num_filters].coeffs[i] = coeff; 
     }
-
 #ifdef DOUBLE_PRECISION
     biquad_defs[num_filters].precision = PRC_FLT;
 #endif
