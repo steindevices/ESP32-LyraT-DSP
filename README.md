@@ -88,11 +88,11 @@ You need a few things:
 
 ### 1. Arduino IDE (1.8.x)
 
-You will find it much easier to work with the ESP32 using the older Arduino 1.8.x IDEs. There are some annoying bugs in the Arduino 2.0.x IDE that make working with the EspressIf boards a bit of a pain. Until these get worked out, it's just easier to stick with the 1.8.x IDEs. If you don't aleady have one installed, [here](https://www.arduino.cc/en/software/OldSoftwareReleases) is a link to these versions.
+You will find it much easier to work with the ESP32 using the older Arduino 1.8.x IDEs. There are some annoying bugs in the Arduino 2.0.x IDE that make working with the EspressIf boards a bit of a pain. Until these get worked out, it's just easier to stick with the 1.8.x IDEs. If you don't aleady have a version installed, [here](https://www.arduino.cc/en/software/OldSoftwareReleases) is a link to these IDEs.
 
 ### 2. Arduino libraries
 
-You will need to install the following libraries through the Arduino library manager:
+You will need to install the following libraries by downloading the .zip files and adding to your Arduino **libraries** directory:
 
 - TelnetSpy - To support user commands to the DSP from a Telnet connection. Library can be found [here](https://github.com/yasheena/telnetspy).
 
@@ -135,7 +135,7 @@ In the **dsp_config.h** file, you specify the name of each output channel, amoun
 For example:
 
 - In a dual subwoofer environment, you can mix the two input channels and add filters to boost specific frequencies for each.
-- If you are building a a two-way speaker and intending to use the DSP as an active crossover, you can feed one input into both channels and specify matching low and high pass filters.
+- If you are building a a two-way speaker and intend to use the DSP as an active crossover, you can feed one input into both channels and specify matching low and high pass filters for the woofer and tweeter respectively.
 - To fix lows and highs in a room, you can import the filters from an external room analyzing program like REW, and then specify these filters in the DSP to compensate for each speaker channel.
 - To add ambient effects speakers to a room, you can specify 1 to 250 ms of delay and add a high pass filter for a pair of surround speakers. 
  
@@ -155,13 +155,13 @@ If you are unfamilar with how to use REW to generate EQ filters, you will find t
 
 When you connect the board directly via the serial port, you can issue commands that provide information as to the board status including filter information as well as errors. When not directly connected to the serial port, you can also use Putty or any other Telnet application over WiFi to receive information from the DSP as it is running. Simply connect the telnet session to the DSP's IP address and use one of the commands below.
 
-- i - Display DSP config information for all channels. Also displayed at start-up
-- p - Print text-based transfer curve (frequency response) curve for each channel
-- d - Disable DSP processing (pass-through mode)
-- e - Enable DSP processing (apply filters mode - default)
-- s - Stop the DSP (mute)
-- r - Run the DSP (un-mute)
-- restart - Reboot the DSP
+- i - Display DSP config information for all channels. Also displayed at start-up.
+- p - Print text-based transfer curve (frequency response) curve for each channel.
+- d - Disable DSP processing (pass-through mode).
+- e - Enable DSP processing (apply filters mode - default).
+- s - Stop the DSP (mute).
+- r - Run the DSP (un-mute).
+- restart - Reboot the DSP.
 
 ## How can I upload updates to the DSP via Wifi?
 
@@ -181,7 +181,7 @@ If you have access to a 3D printer, you will find an STL file for a case [here](
 
 ![Case](Case/ESP32%20LyraT%20DSP%20Case%20(no%20display).jpg)
 
-You will need four 3mm screws to secure the board, and four 2mm screws for the lid.
+You will need four 3 mm screws to secure the board.
 
 ## I'd like to be able to upload new filters without needing to reprogram the DSP. Is this possible?
 
@@ -189,7 +189,7 @@ Not at the moment though I will likely add that capability in a future version. 
 
 ## How do I know if the DSP is clipping?
 
-It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the filters. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
+It is posssible to overdrive the DSP into clipping by either having input levels too high or by too much gain specified in the filters. The DSP will indicate this situation by flashing the green LED on the board. It will also display the number of times the input and output levels have clipped since boot up on the display if one is attached. This information is also shown through the 'i' command via the serial port/Telnet interface.
 
 Note that the green LED will light when clipping occurs at either the input or output.
 
