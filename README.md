@@ -177,11 +177,11 @@ Make sure you are using a good quality 5V power supply. Try different ones. If y
 
 ## What about a case for the DSP? Is there one available?
 
-If you have access to a 3D printer, you will find an STL file for a case [here](/Case). 
+If you have access to a 3D printer, you will find .STL files for the no display and OLED versions [here](/Case).
 
-![Case](Case/ESP32%20LyraT%20DSP%20Case%20(no%20display).jpg)
+![Case](/Case/No%20Display/ESP32%20LyraT%20DSP%20Case%20(no%20display).jpg)
 
-You will need four 3 mm screws to secure the board.
+For the no display version, you will need four 3 mm screws to secure the board to the base. For the OLED version, you will need an additional four screws to secure the display to the lid.
 
 ## I'd like to be able to upload new filters without needing to reprogram the DSP. Is this possible?
 
