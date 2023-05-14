@@ -3,7 +3,7 @@
 An audio DSP built with the Espressif ESP32 LyraT for around $20.
 ![Image of ESP32-T LyraT Board](/Docs/Images/ESP32-LyraT%20(WROVER-E)_1.png)
 
-## Why did you build this?
+## Why did I build this?
 
 In building my new home theater, I planned to dabble a bit into the DIY DSP world to try to tame some room anomalies without spending a bunch of cash. As I have experience in C development and the Arduino world, I figured I would try building my own inexpensive processor. I settled on the Espressif ESP32-Lyrat developer board as a platform as it is open source, cheap ($20), contains a fast processor (ESP32), and includes onboard WIFI as well as a 24-bit DAC/ADC (ES8388).
 
