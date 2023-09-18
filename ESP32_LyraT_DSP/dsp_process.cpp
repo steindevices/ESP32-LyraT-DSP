@@ -49,6 +49,7 @@ static esp_err_t es8388_init()
   i2c_config.scl_io_num = SCL_PIN;
   i2c_config.scl_pullup_en = GPIO_PULLUP_ENABLE;
   i2c_config.master.clk_speed = 100000;
+  i2c_config.clk_flags = 0;
   
   res |= i2c_param_config(I2C_NUM, &i2c_config);
   res |= i2c_driver_install(I2C_NUM, i2c_config.mode, 0, 0, 0);
@@ -192,7 +193,6 @@ esp_err_t dsp_init( TaskHandle_t* taskDSP ) {
   SERIAL.printf("I-DSP: Initializing input I2S...\r\n");
 
   i2s_config_t i2s_read_config;
-
   i2s_read_config.mode = (i2s_mode_t) (I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_RX);
   i2s_read_config.sample_rate = DSP_SAMPLE_RATE;
   i2s_read_config.bits_per_sample = DSP_BITS_PER_SAMPLE;
@@ -204,12 +204,16 @@ esp_err_t dsp_init( TaskHandle_t* taskDSP ) {
   i2s_read_config.use_apll = 1;
   i2s_read_config.tx_desc_auto_clear = 1;
   i2s_read_config.fixed_mclk = 0;
+  i2s_read_config.mclk_multiple = (i2s_mclk_multiple_t) 0;
+  i2s_read_config.bits_per_chan = I2S_BITS_PER_CHAN_DEFAULT;
+ 
 
   i2s_pin_config_t i2s_read_pin_config;
   i2s_read_pin_config.bck_io_num = GPIO_NUM_5;
   i2s_read_pin_config.ws_io_num = GPIO_NUM_25;
   i2s_read_pin_config.data_out_num = GPIO_NUM_26;
   i2s_read_pin_config.data_in_num = GPIO_NUM_35;
+  i2s_read_pin_config.mck_io_num = GPIO_NUM_0;   
 
   i2s_driver_install(I2S_NUM, &i2s_read_config, 0, NULL);
   i2s_set_pin(I2S_NUM, &i2s_read_pin_config);
