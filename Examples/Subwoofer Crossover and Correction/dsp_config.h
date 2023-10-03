@@ -6,7 +6,7 @@ dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
     "Subwoofer 1",      // Channel name
     {1,1},              // Input channel(s) - Left/Right
     0,                  // Gain in dB
-    0,                  // Delay in milliseconds
+    0                   // Delay in milliseconds
   },
   {
     "Subwoofer 2",
