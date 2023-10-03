@@ -21,7 +21,7 @@ filter_def_t FREQ_Filters[] = {  // Channel, Filter type, Center frequency, Q va
   {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
   {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
   {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 }
  };
 
 // BiQuad specified filters
