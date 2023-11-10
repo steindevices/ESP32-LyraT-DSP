@@ -6,7 +6,7 @@ dsp_channel_t DSP_Channels[DSP_NUM_CHANNELS] = {
     "Effects Left",     // Channel name
     {1,0},              // Input channel(s) - Left/Right
     0,                  // Gain in dB
-    100,                // Delay in milliseconds
+    100                 // Delay in milliseconds
   },
   {
     "Effects Right",
@@ -21,7 +21,7 @@ filter_def_t FREQ_Filters[] = {  // Channel, Filter type, Center frequency, Q va
   {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
   {0, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
   {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
-  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 },
+  {1, DSP_FILTER_HIGH_PASS, 120, 0.7, 0.0 }
  };
 
 // BiQuad specified filters
