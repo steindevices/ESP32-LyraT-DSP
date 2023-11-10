@@ -69,7 +69,7 @@ static void loopSerialInput() {
       dsp_command( 'r' );
     } else if( input_text.equals( "p" ) ) { // Plot transfer function curve
       dsp_command( 'p' );         
-    } else if( input_text.equals( "o" ) ) { // Override filters
+    } else if( input_text.equals( "u" ) ) { // Override filters
       dsp_command( 'u' );       
     } else if( input_text.equals( "restart" ) ) { // Reboot DSP
       ESP.restart();      
