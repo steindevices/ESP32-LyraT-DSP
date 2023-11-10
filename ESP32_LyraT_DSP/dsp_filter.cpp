@@ -3,6 +3,7 @@
 static const char   compile_date[] = __DATE__ " " __TIME__;
 static float        Biquad_Buff_F32[ DSP_MAX_SAMPLES ];  // Single channel input buffer for biquad function
 static char*        filter_name[] = {"Low Pass", "High Pass", "Band Pass", "Notch Pass", "All Pass", "Peak EQ", "Low Shelf", "High Shelf" };
+static bool         filter_update = false;
 
 
 //------------------------------------------------------------------------------------
@@ -82,7 +83,7 @@ static dsp_data_t* dsp_setup_channel( dsp_channel_t* channel ) {
       return( NULL );
     }
   }
-
+  
   // Allocate the necessary data buffers for delay and biquad calculations
   channel->data = (dsp_data_t*) malloc( sizeof( dsp_data_t ) );
 
@@ -174,13 +175,19 @@ static esp_err_t dsp_load_biquads( dsp_channel_t* channel, int channel_id, biqua
 //------------------------------------------------------------------------------------
 // Load frequency specified filter definitions
 //------------------------------------------------------------------------------------
-static esp_err_t dsp_load_filters( dsp_channel_t* channel, int channel_id, filter_def_t* filter_defs, int filter_def_count ) {
+static esp_err_t dsp_load_filters( dsp_channel_t* channel, int channel_id, filter_def_t* filter_defs, int filter_def_count, bool reset_filters ) {
 
   int         num_filters;
   dsp_data_t* dsp_data;
 
   dsp_data = channel->data;
-  num_filters = dsp_data->num_filters;
+
+  // Are we resetting the filters
+  if( reset_filters ) {
+    num_filters = 0;
+  } else {
+    num_filters = dsp_data->num_filters;
+  }
 
   // Load each frequency specified filter    
   for( int filter_id = 0; filter_id < filter_def_count; ++filter_id ) {
@@ -249,17 +256,40 @@ esp_err_t dsp_filter_init( dsp_channel_t* channels, biquad_def_t* biquad_defs, i
 
     if( dsp_load_biquads( channel, channel_id, import_defs, import_def_count ) == ESP_FAIL ) {
       return( ESP_FAIL );
-    }      
+    }
 
     if( dsp_load_biquads( channel, channel_id, biquad_defs, biquad_def_count ) == ESP_FAIL ) {
       return( ESP_FAIL );
     }
 
-    if( dsp_load_filters( channel, channel_id, filter_defs, filter_def_count ) == ESP_FAIL ) {
+    if( dsp_load_filters( channel, channel_id, filter_defs, filter_def_count, false ) == ESP_FAIL ) {
       return( ESP_FAIL );
     }
   }
 
+  return( ESP_OK );
+}
+
+
+//------------------------------------------------------------------------------------
+// Update the DSP filters
+//------------------------------------------------------------------------------------
+esp_err_t dsp_update_filters( filter_def_t* filter_defs, int filter_def_count ) {
+
+  // Stop filter processing
+  filter_update = true;
+
+  // Load the update filters for each channel
+  for( int channel_id = 0; channel_id < DSP_NUM_CHANNELS; ++ channel_id ) {
+    
+    if( dsp_load_filters( &DSP_Channels[ channel_id ], channel_id, filter_defs, filter_def_count, true ) == ESP_FAIL ) {
+      return( ESP_FAIL );
+    }
+  } 
+
+  // Re-enable filter processing 
+  filter_update = false;
+  
   return( ESP_OK );
 }
 
@@ -348,7 +378,7 @@ static esp_err_t dsp_process_input( dsp_channel_t* channel, int sample_count, sa
 //------------------------------------------------------------------------------------
 // Process the filters 
 //------------------------------------------------------------------------------------
-static esp_err_t dsp_process_filters( dsp_data_t* dsp_data,int sample_count ) {
+static esp_err_t dsp_process_filters( dsp_data_t* dsp_data, int sample_count ) {
 
   esp_err_t         res;
 
@@ -456,6 +486,11 @@ esp_err_t dsp_filter( dsp_channel_t* channels, sample_t* input_buffer, sample_t*
 
   // Reset the clipping flag
   *clip_flag = false;
+
+  // If updating filters, temporarily turn off filters
+  if( filter_update ) {
+    filters_enabled = false;
+  }
 
   for( channel_id = 0; channel_id < DSP_NUM_CHANNELS ; ++ channel_id ) {
         

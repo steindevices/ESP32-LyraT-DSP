@@ -69,6 +69,8 @@ static void loopSerialInput() {
       dsp_command( 'r' );
     } else if( input_text.equals( "p" ) ) { // Plot transfer function curve
       dsp_command( 'p' );         
+    } else if( input_text.equals( "o" ) ) { // Override filters
+      dsp_command( 'u' );       
     } else if( input_text.equals( "restart" ) ) { // Reboot DSP
       ESP.restart();      
     } else if( input_text.equals( "?" ) ) { // Show help
@@ -76,7 +78,8 @@ static void loopSerialInput() {
       SERIAL.println( "e - Enable filters" );
       SERIAL.println( "d - Disable filters" );
       SERIAL.println( "s - Stop output" );
-      SERIAL.println( "r - Run output" );      
+      SERIAL.println( "r - Run output" ); 
+      SERIAL.println( "u - Update filters" );     
       SERIAL.println( "p - Plot transfer function curve" );
       SERIAL.println( "restart - Reboot DSP" );      
     } else {
@@ -254,14 +257,12 @@ void loop() {
 //------------------------------------------------------------------------------------
 static void main_task( void * pvParameters ) {
 
-#ifdef WIFI_ON
-  setupTelnetSpy();    
-#endif
-  setupSerial();
 #ifdef WIFI_ON  
   setupWiFi();
   setupOTA();
-#endif  
+  setupTelnetSpy();    
+#endif
+  setupSerial();
   setupDSP();  
 #ifdef DISPLAY_ON  
   setupDisplay();
@@ -270,8 +271,8 @@ static void main_task( void * pvParameters ) {
   while( true ) {
 #ifdef WIFI_ON
     loopCheckWiFi();
-    loopTelnetSpy(); 
     loopArduinoOTA();
+    loopTelnetSpy(); 
 #endif
     loopSerialInput();
 #ifdef DISPLAY_ON  

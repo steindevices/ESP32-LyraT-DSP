@@ -129,6 +129,7 @@ typedef struct dsp_channel_t {
 
 extern TelnetSpy      SerialAndTelnet;
 extern char           strIPAddress[16];
+extern dsp_channel_t  DSP_Channels[DSP_NUM_CHANNELS];
 
 #ifdef WIFI_ON
   #undef SERIAL        
@@ -148,6 +149,7 @@ void              dsp_command( char command );
 void              dsp_filter_info( dsp_channel_t* channels );
 void              dsp_plot( dsp_channel_t* channels );
 esp_err_t         dsp_filter_init( dsp_channel_t* channels, biquad_def_t* biquad_defs, int biquad_def_count, filter_def_t* filter_defs, int filter_def_count );
+esp_err_t         dsp_update_filters( filter_def_t* filter_defs, int filter_def_count );
 esp_err_t         dsp_filter( dsp_channel_t* channels, sample_t* input_buffer, sample_t* output_buffer, int buffer_len, bool filters_enabled, bool* clip_flag );
 esp_err_t         dsp_get_biquad( filter_def_t* filter, double* coeffs );
 biquad_def_t*     dsp_import_filters( int* import_filter_count );

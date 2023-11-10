@@ -165,6 +165,24 @@ void dsp_command( char command ) {
     case 'p' :
       dsp_plot( DSP_Channels );
       break;
+
+    case 'u' :
+      static filter_def_t FREQ_Filters[] = {
+             {0, DSP_FILTER_PEAK_EQ, 60, 2.0, 3.0},
+             {0, DSP_FILTER_PEAK_EQ, 80, 5.0, 2.0},
+             {0, DSP_FILTER_PEAK_EQ, 100, 5.0, 2.0},
+             {0, DSP_FILTER_PEAK_EQ, 120, 5.0, 2.0},
+             {0, DSP_FILTER_PEAK_EQ, 140, 5.0, 2.0},
+             {1, DSP_FILTER_PEAK_EQ, 60, 2.0, 3.0},
+             {1, DSP_FILTER_PEAK_EQ, 80, 5.0, 2.0},
+             {1, DSP_FILTER_PEAK_EQ, 100, 5.0, 2.0},
+             {1, DSP_FILTER_PEAK_EQ, 120, 5.0, 2.0},
+             {1, DSP_FILTER_PEAK_EQ, 140, 5.0, 2.0}             
+             };
+             
+      dsp_update_filters( FREQ_Filters, 10 );
+      SERIAL.printf("I-DSP: DSP filters updated\r\n");       
+      break;
   }
 }
 
@@ -245,13 +263,13 @@ esp_err_t dsp_init( TaskHandle_t* taskDSP ) {
 //------------------------------------------------------------------------------------ 
 // DSP processing initialization
 //------------------------------------------------------------------------------------
-static esp_err_t dsp_processing_init() {
+static esp_err_t dsp_processing_init( dsp_channel_t* channels, biquad_def_t* biquad_defs, int biquad_def_count, filter_def_t* filter_defs, int filter_def_count) {
   
   esp_err_t res = ESP_OK;
 
   SERIAL.printf("I-DSP: Setting up channels...\r\n");
 
-  res = dsp_filter_init( DSP_Channels, BIQUAD_Filters, sizeof( BIQUAD_Filters )/sizeof( biquad_def_t ), FREQ_Filters, sizeof( FREQ_Filters )/sizeof( filter_def_t ) );
+  res = dsp_filter_init( channels, biquad_defs, biquad_def_count, filter_defs, filter_def_count );
   if( res != ESP_OK ) {
     dsp_ok_flag = false;
     return( res );
@@ -268,13 +286,13 @@ static esp_err_t dsp_processing_init() {
 //------------------------------------------------------------------------------------
 void dsp_task( void * pvParameters ) {
   
-  size_t    i2s_bytes_read;
-  size_t    i2s_bytes_written;
-  bool      clip_flag;
-  esp_err_t res;
-  
+  size_t        i2s_bytes_read;
+  size_t        i2s_bytes_written;
+  bool          clip_flag;
+  esp_err_t     res;  
+
   // Setup the DSP channels
-  res = dsp_processing_init();
+  res = dsp_processing_init( DSP_Channels, BIQUAD_Filters, sizeof( BIQUAD_Filters )/sizeof( biquad_def_t ), FREQ_Filters, sizeof( FREQ_Filters )/sizeof( filter_def_t ) );
   
   if( res == ESP_OK ) {
     // Run DSP processing
